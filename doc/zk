@@ -1,0 +1,49 @@
+集群角色：leader， follower, observer
+会话： tcp长连接
+数据节点： znode，持久节点，临时节点，sequential参数
+版本：znode中保存stat，记录了三个数据版本，分别是version znode版本,cversion 子节点版本,aversion acl版本
+watcher:
+ACL: 节点权限控制，create,read,write,delete,admin
+
+ZAB协议，模式：崩溃恢复，消息广播
+
+消息广播：原子广播协议，二阶段提交，移除了中断逻辑。
+在消息广播过程中，leader服务器会为每一个follower服务器各自分配一个单独的队列，然后将需要广播的事务proposal依次放入这些队列中，并且根据
+fifo策略进行消息发送。每一个follower服务器在接收到这个事务proposal后，都会首先将其以事务日志的形式写入到本地磁盘，并且在成功写入后反馈
+给leader服务器一个ack响应。当leader服务器接收到超半数follower的ack响应后，就广播一个commit消息给所有的follower服务器以通知其进行事务
+提交，同时leader自身也会完成对事务的提交，而每一个follower接收到commit消息后也会完成事务的提交。
+
+
+崩溃恢复：
+zab协议规定如果一个事务proposal在一台机器上被处理成功，那么应该在所有机器上都被处理成功。
+zab协议需要确保那些在leader服务器上提交的事务最终被所有服务器都提交。
+zab协议需要确保丢弃那些只在leader服务器上被提出的事务
+
+阶段一：发现,Leader选举过程,用于多个分布式进程中选举出主进程
+1.follower f 将自己最后接受的事务proposal的epoch值发送给准leader l
+2.当接收到来自过半follower的epoch消息后,准leader l会生成newEpoch消息给这些过半的follower
+  准leader会从所有收到的epoch值中选出最大的值e,对其进行加1操作
+3.当follower接收到来自准leader l 的newEpoch后,如果其检测到当前的epoch小于newEpoch,那么将epoch赋值为newEpoch,同时向leader反馈
+  ack消息
+4.当leader收到过半follower的确认消息ack后,leader l就会从这过半服务器中选出一个follower f,并使其成为初始化事务集合Ie
+
+阶段二 同步
+1.Leader l会将e与Ie以newLeader(e,Ie)消息的形式发送给所有Quorum中的Follower
+2.当Follower收到来自Leader L的newLeader消息后,如果发现epoch 不等于e,则直接进入下一轮循环,因为此时follower发现自己还在上一轮,无法参与
+  本轮的同步.如果epoch = e,那么follower就会执行事务的应用操作.具体的对于每一个事务proposal,follower都会接受.最后follower会反馈给
+  leader,表明自己已接受并处理了所有的Ie中的事务proposal
+3.当leader接收到来自过半follower针对newleader的反馈消息后,就会向所有follower发送commit消息.
+4.当follower收到来自leader的commit消息后就会依次处理并提交所有Ie中未处理的事务.
+阶段三 广播
+1.leader L收到客户端新的请求后,会生成对应的事务proposal,并根据zxid的顺序向所有的follower发送提案
+2.follower根据消息接收的先后顺序处理来自leader的事务proposal,并追加到hf中,反馈给leader
+3.leader接收到来自过半follower针对proposal的反馈消息后,就会发送commit消息给所有follower
+4.follower接受到来自leader的commit消息后,就要开始提交事务proposal
+
+运行分析
+looking ,following, leading
+完成leader选举以及数据同步之后,zab协议会进入原子广播阶段.在这一阶段中,leader会以队列的形式为每一个与自己保持同步的follower创建一个操作
+队列.同一时刻,一个follower只能和一个leader保持同步,leader进程与所有follower进程之间通过心跳检测机制感知彼此的情况.如果leader可以在
+超时时间内正常收到心跳检测,那么follower就会一直与该leader保持连接.如果在指定的超时时间内leader无法从过半的follower进程那里接收到
+心跳信息,或者是tcp连接本身断开了,那么leader就会终止对当前周期的领导,并转换到looking状态,所有的follower也会选择放弃这个leader,同时
+转换到looking状态.之后所有进程会开始新一轮的leader选举.
