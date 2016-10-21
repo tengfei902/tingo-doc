@@ -1,2 +1,13 @@
 领域驱动设计
 持续交付理论
+微服务于SOA的异同
+编排与协同调用方式
+RPC调用(SOAP,thrift,proctocol buffers)
+spring boot
+Rest实战
+ATOM
+消费者竞争模式
+灾难性故障转移
+aws
+BFF 为前端服务的后端
+PaaS 平台即服务
