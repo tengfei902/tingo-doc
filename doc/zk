@@ -47,3 +47,18 @@ looking ,following, leading
 超时时间内正常收到心跳检测,那么follower就会一直与该leader保持连接.如果在指定的超时时间内leader无法从过半的follower进程那里接收到
 心跳信息,或者是tcp连接本身断开了,那么leader就会终止对当前周期的领导,并转换到looking状态,所有的follower也会选择放弃这个leader,同时
 转换到looking状态.之后所有进程会开始新一轮的leader选举.
+
+检测节点是否存在
+1.无论节点是否存在,通过调用exists都会注册watcher
+2.watcher能够对节点创建,删除,更新进行坚挺
+3.节点的子节点的各种变化都不会通知客户端
+
+权限控制
+world auth digest ip super
+
+使用场景
+1.数据发布订阅
+配置中心
+2.负载均衡
+
+
