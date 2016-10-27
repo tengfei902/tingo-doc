@@ -89,3 +89,37 @@ JVM性能监控
 
 visual VM
 
+快速监控锁竞争
+
+java应用性能分析
+
+方法分析 java应用中方法执行时间信息
+内存分析 java应用程序内存的使用信息,包括内存中已分配对象的数目,大小,活跃对象等信息
+
+performance analyzer
+CodeAnalyst performance Analyzer
+VTune
+NetBeans Profiler
+
+性能优化机会:
+1.系统内核态CPU使用
+2.锁竞争            对同一个对象的操作,需持有同一个锁
+3.volatile         低级别同步
+4.调整数据结构大小   拆分数据结构,缩小锁粒度
+5.增加并行性
+6.过高的CPU使用率
+
+concurrent atomic  java内存模型/java内存可见性
+1. ++操作不是原子操作
+2. 非原子操作有线程安全问题
+3. 并发下的内存可见性
+4. Atomic类通过CAS + volatile可以比synchronized做的更高效
+
+sychronized,volatile,CAS
+
+
+性能指标:吞吐量,延迟,内存占用
+1.垃圾收集器调优
+2.堆内存大小调整
+计算活跃数据大小(full gc后java堆中老年代和永久代占用的空间大小)
+
