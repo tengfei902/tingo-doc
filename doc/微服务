@@ -1,5 +1,6 @@
 领域驱动设计
 持续交付理论
+六边形架构理论
 微服务于SOA的异同
 编排与协同调用方式
 RPC调用(SOAP,thrift,proctocol buffers)
