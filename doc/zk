@@ -62,3 +62,22 @@ world auth digest ip super
 2.负载均衡
 
 
+分布式队列
+FIFO Barrier
+
+ZooKeeper的使用
+
+ZooKeeper技术内幕
+1.数据模型
+节点类型:持久节点,临时节点,顺序节点
+版本:
+version 当前节点内容版本号
+cversion当前节点子节点版本号
+aversion当前节点ACL变更版本号
+wathcer:
+
+2.序列化与协议
+jute序列化组件
+通信协议
+
+3.客户端
