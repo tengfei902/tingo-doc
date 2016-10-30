@@ -81,3 +81,100 @@ jute序列化组件
 通信协议
 
 3.客户端
+
+请求处理
+请求接收
+1.IO层接收来自客户端的请求 NIOServerCnxn实例维护每一个客户端连接
+2.判读是否客户端会话创建请求, 如果NIOServerCnxn实例不存在,则该请求为会话创建请求
+3.反序列化ConnectRequest请求
+4.判断是否readonly客户端, 如果当前zookeeper服务器以readonly模式启动,那么所有来自非readonly客户端的请求将无法被处理
+5.检查客户端zxid.如果发现客户端zxid大于服务端zxid,
+6.协商sessionTimeout
+7.判断是否需要重新创建会话
+会话创建
+8.为客户端生成sessionId
+9.注册会话
+10.激活会话
+11.生成会话密码
+预处理
+12.将请求交给PrepRequestProcessor处理器进行处理
+13.创建请求事务头
+14.创建请求事务体
+15.注册与激活会话
+事务处理
+16.将请求交给ProposalRequestProcessor处理
+Sync流程
+zookeeper中,每一个事务请求都需要集群中过半机器投票认可才可以应用到zookeeper的内存数据库中去
+a.发起投票,leader服务器发起一轮事务投票
+b.生成提议proposal
+c.广播协议
+d.收集投票 follower服务器在接收到leader发来的提议后,会进入sync流程来进行事务日志的记录,一旦日志记录完成后,会发送ack消息给
+leader服务器,leader在收到超过半数follower服务器的ack消息后,提议进入commit阶段
+e.将请求放入toBeApplied队列中
+f.广播commit消息
+commit流程
+a.将请求交付给CommitProcessor.CommitProcessor将任务放入到queuedRequests队列中
+b.处理queuedRequests队列数据
+c.标记nextPending 标记的作用,一方面保证事务请求处理的顺序性,另一方面,便于处理器检测当前是否存在正在处理的事务
+d.等待proposal投票
+e.投票通过
+f.提交请求
+事务应用流程
+17.交付给FinalRequestProcessor
+18.事务应用
+19.将事务请求放入队列,commitProposal
+会话响应
+20.统计处理
+21.创建响应ConnectResponse
+22.序列化ConnectResponse
+23.IO层发送响应消息给客户端
+
+setData请求
+1.IO层接收来自客户端的请求
+2.判断是否客户端会话创建请求
+3.将请求交给PreRequestProcessor处理器进行处理
+4.创建请求事务头
+5.会话检查
+6.反序列化请求,并创建ChangeRecord
+7.ACL检查
+8.数据版本检查
+9.创建请求事务体
+10.保存事务操作到outstandingChanges队列中
+事务处理
+事务应用
+11.交付给FinalRequestProcessor处理器
+12.事务应用. 将请求事务头和事务体直接交给内存数据库ZKDatabase进行事务应用,同时返回ProcessTxnResult对象
+13.将事务请求放入队列,commitProposal
+请求响应
+14.统计处理
+15.创建响应体
+16.创建响应头
+17.序列化响应
+18.IO层发送响应给客户端
+
+GetData请求
+
+数据与存储
+1.内存数据
+DataTree
+DataNode
+ZKDatabase
+2.事务日志
+
+初始化
+1.初始化FileTxnSnapShot,FileSnapShotLog是事务日志和快照数据访问层,包含了事务日志和数据快照两部分.
+2.初始化ZKDatabase, 构建初始化的DataTree,同时将初始化的FileTxnSnapLog交给ZKDatabase,以便内存数据库能够对事务日志和快照进行访问.
+DataTree在每个Zookeeper实例中都是单例,保存了所有节点信息
+3.创建PlayBackListener监听器.
+4.处理快照文件
+5.获取最新的100个快照
+6.解析快照文件
+7.获取最新的ZXID
+8.处理事务日志
+9.获取zxid_for_snap之后提交的事务
+10.事务应用
+11.获取最新zxid
+12.校验epoch
+
+TaoKeeper 监控
+
