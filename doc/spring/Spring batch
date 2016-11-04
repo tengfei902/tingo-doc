@@ -1,0 +1,45 @@
+itemReader itemProcessor itemWriter
+
+reader配置:
+flat file reader
+1.reader
+2.resource 文件位置
+3.linesToSkip
+4.lineMapper ,  lineTokenizer分隔符 ,names 字段名, fieldSetMapper
+问题:映射字段类型
+
+tasklet
+
+1.job (id)
+2.step (id,next) tasklet
+
+jobRepository启动运行job
+
+skippable-exception-classes
+skip-limit
+
+spring batch concepts
+1.domain language
+infrastructure components: job launcher,job repository
+application components:
+job,step,tasklet,item,chunk,item reader,item processor,item writer
+
+
+2.infrastructure components
+
+job launcher:
+
+job repository:
+SimpleJobRepository: configure job repository in database
+
+3.Anatomy of a batch job
+static job model
+dynamic job runtime
+
+    1.step
+    can be reuse
+    decision标签,路由转发
+    2.job
+    job,job instance,job execution
+
+Core Spring Batch
