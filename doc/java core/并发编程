@@ -1,2 +1,26 @@
 fork/join 框架
 工作窃取算法
+ThreadGroup
+
+ThreadFactory
+
+使用锁实现同步
+1.支持更灵活的同步代码块结构.使用synchronized只能在同一个代码块中获取和释放控制.lock支持实现更复杂的临界区结构.
+2.lock接口实现更多功能
+3.lock接口支持分离读和写操作
+4.lock接口具有更好的性能
+
+公平锁
+
+semaphore
+CountDownLatch
+CyclicBarrier
+Phaser
+Exchanger
+
+Fork/Join框架
+工作窃取算法
+
+
+deque
+queue

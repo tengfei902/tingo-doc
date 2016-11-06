@@ -123,3 +123,22 @@ sychronized,volatile,CAS
 2.堆内存大小调整
 计算活跃数据大小(full gc后java堆中老年代和永久代占用的空间大小)
 
+-xmx,-xms 3~4倍full gc后老年代空间大小
+-XX:PermSize 1.2~1.5倍full gc 后永久代空间占用量
+-Xmn 1~1.5倍 full GC后老年代空间占用量
+老年代:2~3倍Full GC后老年代空间占用量
+
+CMS
+压缩式GC
+CMS调优因素
+1.新生代对象提升速率较低
+2.并行老年代回收线程回收速率
+3.CMS回收器回收位于对象之间的空间造成的空间碎片化
+
+Survivor
+调整survivor空间时,如果新生代空间保持不变,会导致Eden空间减小,增加minor GC的频率
+
+永久代垃圾收集
+
+基准测试
+1.预热阶段
