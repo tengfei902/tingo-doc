@@ -1,0 +1,106 @@
+redis字符串
+set key value
+get key
+
+redis哈希
+hmset key key1 value1 key2 value2
+hgetall key
+
+列表 有序
+lpush key value
+lrange key min max
+
+集合 无序
+sadd key value
+smembers key
+
+集合排序 时间复杂度为O(1),使用zadd排序对比内存排序以及elasticsearch排序
+zadd key score value
+zrangebyscore key minScore maxscore
+
+hyberloglog
+
+redis发布订阅
+subscribe topic
+publish topic messages
+
+redis事务
+multi
+...
+exec
+
+redis脚本
+eval
+
+redis备份
+save
+bgsave
+
+redis 安全
+设置密码
+config set requirepass password
+auth password
+
+redis性能测试
+
+redis管道
+
+redis分区
+分区的劣势
+1.涉及多个键的操作不支持
+2.涉及多个键时，redis事务无法使用
+3.分区粒度是一个键，所以它不可能使用一个键和一个非常大的有续集合分享一个数据集
+4.数据备份需要多个实例操作
+
+范围分区，散列分区
+
+redis键
+
+
+数据结构与对象
+1.简单动态字符串
+将SDS作为redis默认字符串表示
+SDS用作缓冲区
+    1.SDS的定义
+    每个sds.h/sdshdr结构表示一个SDS值
+    2.SDS与C字符串的区别
+        1.获取字符串长度复杂度，C字符串为O(n),SDS为O(1),因为SDS中维护了len参数
+        2.SDS字符串拼接时，会首先计算长度是否足够，不够会自动扩展
+        3.C字符串长度变更时会重新分配内存，SDS使用空间预分配和空间惰性回收，减少内存空间的重新分配
+        4.SDS使用二进制安全
+        5.SDS兼容C字符串
+    3.SDS API
+
+2.链表
+    1.链表和链表节点的实现
+    redis链表实现的特性：
+        1.双端，节点带有next和pre指针，获取节点的前置和后置节点复杂度都是O(1)
+        2.无环，表头节点和表尾指针指向null
+        3.通过list的head和tail可以找到链表首尾节点，复杂度为O(1)
+        4.带链表长度计数器，获取链表长度复杂度O(1)
+        5.多态
+
+3.字典
+    1.字典的实现
+    Redis的字典使用哈希表作为底层实现，
+        1.哈希表
+        2.哈希表节点
+        3.字典
+    2.哈希算法
+    3.解决键冲突
+    Redis哈希表使用链地址法解决键冲突，每个哈希表节点都有一个next指针，多个哈希表节点可以用next指针构成一个单向链表
+    4.rehash
+        1.为字典的ht[1]哈希表分配空间，哈希表的大小取决于要执行的操作和ht[0]的大小
+        2.将保存在ht[0]的所有键值rehash到ht[1]上，
+        3.当ht[0]的所有键值都迁移到ht[1]上，释放ht[0],将ht[1]设置为ht[0],创建一个空白的哈希表
+    5.渐进式rehash
+        1.为ht[1]分配空间，让字典同时持有ht[0]和ht[1]两个哈希表
+        2.在字典中维持一个索引计数器变量rehashidx,并将值设置为0
+        3.在rehash期间，每次对字典的执行添加删除，增加，查找或者更新做操，程序除了执行指定的操作以外，还会顺带将ht[0]哈希表在
+        rehashindex索引上的所有键值rehash到ht[1]上
+        4.随着字典操作的不断执行，最终在某个时间点上，ht[0]上的所有索引都会rehash到ht[1]上
+
+4.跳跃表
+是一种有序的数据结构，通过在每个节点中维持多个指向其他节点的指针，从而达到快速访问节点的目的。实现有序集合键和内部数据结构中使用
+    1.跳跃表的实现
+
