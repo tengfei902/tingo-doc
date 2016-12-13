@@ -1,0 +1,4 @@
+1.JDBC事务
+2.JTA事务 XADataSource,XAConnection,XAResource
+3.容器事务
+
