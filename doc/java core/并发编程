@@ -1,6 +1,6 @@
 fork/join 框架
 工作窃取算法
-ThreadGroup
+ThreadGroup 线程分组
 
 ThreadFactory
 
@@ -24,3 +24,12 @@ Fork/Join框架
 
 deque
 queue
+
+ThreadLocal
+通过ThreadLocal为每个线程创建一个对象副本.对象副本存储在Thread的ThreadLocalMap中,key是threadLocal,value是副本内容.
+
+CyclicBarrier
+CountDownLatch
+Exchanger
+Semaphore
+SynchronousQueue
