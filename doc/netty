@@ -1,0 +1,19 @@
+IO基础
+linux网络io模型
+linux内核将所有外部设备看作一个文件夹操作,对一个文件的读写会调用内核的系统命令,返回一个file descriptor(fd,文件描述符).对一个socket的
+读写也会有相应的描述符,称为socketfd,描述符是一个数字,指向内核中的一个结构体
+IO模型
+1.阻塞IO模型
+2.非阻塞IO模型
+3.IO复用模型
+linux提供select/poll,进程通过将一个或多个fd传递给select或poll系统调用,阻塞在select操作上.这样select/poll可以监听多个fd是否处于
+就绪状态.select/poll是顺序扫描fd检查是否就绪,支持的fd数量有限.
+linux另外提供epoll,基于时间驱动调用rollback
+4.信号驱动IO模型
+首先开启套接口信号驱动IO功能,并通过系统调用sigaction执行一个信号处理函数.当数据准备就绪时,就为该进程生成一个SIGIO信号,通过信号回调通知
+应用程序读取数据
+5.异步IO
+告知内核启动某个操作,并让内核在整个操作完成后通知.与信号驱动的区别:
+信号驱动通知何时开始,异步io通知何时完成
+
+java核心类库多路复用器selector基于epoll
