@@ -1,0 +1,48 @@
+缓冲区buffers
+通道 channels
+文件锁定和内存映射文件
+套接字
+选择器
+正则表达式
+字符集
+
+缓冲区
+缓冲区属性
+创建缓冲区
+字节缓冲区
+
+通道
+1.0中通道与操作系统文件描述符和文件具柄具有一对一的g关系。
+缓冲区是通道内部用来发送和接收数据的端点。
+通道只能在字节缓冲区上操作。
+
+IO分为File IO和Stream IO，相应的channel分为文件(file)通道和套接字(Socket)通道。
+FileChannel
+SocketChannel,ServerSocketChannel,DatagramChannel
+1.打开通道
+SocketChannel通过本身的open方法获得。
+FileChannel对象只能通过在一个打开的RandomAccessFile,FileInputStream,FileOutputStream对象上调用getChannel方法
+2.使用通道
+通道可以是单向(unidirectional)或者双向(bidirectional)的
+ReadableByteChannel提供读通道，WritableByteChannel提供写通道，同时实现两个接口实现双向通道。语法糖(syntactic sugar)
+通道可以以阻塞(blocking)和非阻塞(nonblocking)模式运行。
+只有面向流(stream-oriented)的操作,如sockets和pipes才能使用非阻塞模式。
+Socket通道类从selectableChannel引申而来，从SelectableChannel引申而来的类可以和支持有条件的选择器(Selectors)一起使用。
+将非阻塞io和选择器组合起来可以使用多路复用IO（multiplexed IO）
+3.关闭通道
+4.Scatter/Gather矢量IO（vectored IO）
+write:数据从多个缓冲区按顺序抽取(gather)并沿通道发送。
+read:从通道读取的数据会按顺序被散步(scatter)到多个缓冲区，将每个缓冲区填满直至通道中的数据或者缓冲区的空间消耗完。
+ScatteringByteChannel
+GatheringByteChannel
+可以将读取的数据分开放到多个存储桶中(bucket),避免了缓冲区拷贝。
+5.文件通道
+文件通道总是阻塞式的。 异步IO,Asynchronous IO,NIO 1.0不支持
+
+
+
+
+
+
+
+
