@@ -39,11 +39,3 @@ GatheringByteChannel
 5.文件通道
 文件通道总是阻塞式的。 异步IO,Asynchronous IO,NIO 1.0不支持
 
-
-
-
-
-
-
-
-b
