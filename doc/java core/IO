@@ -1,2 +1,6 @@
 Serializable
 Externalizable
+
+NIO
+缓冲区
+属性:容量capacity,上界limit,位置position,标记mark
