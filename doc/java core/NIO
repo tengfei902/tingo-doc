@@ -38,4 +38,49 @@ GatheringByteChannel
 可以将读取的数据分开放到多个存储桶中(bucket),避免了缓冲区拷贝。
 5.文件通道
 文件通道总是阻塞式的。 异步IO,Asynchronous IO,NIO 1.0不支持
+FileChannel是线程安全的(thread safe)
+FileChannel是一个反映出来java虚拟机外部的yi一个具体对象的抽象。
+6.访问文件
+每个FileChannel对象都同一个文件描述符有一对一的关系(nio 1.0)
+文件空洞
+7.文件锁定(file locking)
+锁类型:共享(shared),独占(exclusive)
+8.内存映射文件
+FileChannel类提供map()方法，该方法在一个打开的文件和一个特殊类型的ByteBuffer之间建立一个虚拟的内存映射。
+在FileChannel上调用map()方法会创建一个由磁盘文件支持的虚拟内存映射并在n那块虚拟空间外部封装一个MappedByteBuffer对象。
+MapMode:READ_ONLY,READ_WRITE,PRIVATE
+private指写时拷贝(copy on wrte)映射。意味着通过put方法所做的任何修改都将会导致文件产生一个私有的数据拷贝并且
+拷贝中的数据只有MappedByBuffer实例可以看到。一旦缓冲区被施以垃圾回收(garbage collect)，数据更新会丢失
+一个映射一旦建立以后将保持有效，知道MappedByteBuffer对象被施以垃圾回收。
+映射缓冲区没有绑定到创建它的通道上，关闭现关联的通道不会破坏映射。
+9.Channel-to-Channel传输
+transferTo()和transferFrom()允许将一个通道交叉连接到另一个通道，而不需要通过一个中间缓冲区来传递数据。
+10.Socket通道
+所有socket通道类在被实例化时都会创建一个对等的socket对象(nio 1.0)
+10.1 非阻塞模式
+有条件的选择(readiness selection)是一种可以用来查询通道的机制，该查询可以判断通道是否准备好执行一个目标，如读或写。
+10.2 常用Socket通道
+ServerSocketChannel主要面向TCP
+DataGramChannel主要面向UDP连接
+DataGramChannel receive()方法加入提供的ByteBuffer空间不足以保存正在接收的数据包，没有被填充的数据包将被丢弃。
+11.管道 Pipe
+Pipe类提供一对提供环回机制的channel对象。Pipe操作对象在同一JVM内，不能跨进程。
+pipe内置SourceChannel(负责读的一端)，SinkChannel(负责写的一端)，在Pipe对象初始化时同时创建。
+管道用途：
+1.管道可以被用来仅在同一虚拟机内部传输数据,封装性比较好
+2.辅助测试，单元测试框架可以将某个待测试的类连接到管道的写端并检查管道的读端出来的数据。
+12.通道工具类 Channels
 
+<<<<<<< HEAD
+=======
+4.选择器
+4.1选择器基础
+当调用一个选择器对象的select()方法时，相关的键会被更新，用来检查所有被注册到该选择器的通道，可以获取到一个键的集合，从而
+找到当时已经就绪的通道。
+选择器提供了询问通道是否已经准备好执行每个io操作的能力。
+
+
+
+
+b
+>>>>>>> 38c92db8ed4bd59947a8c27304a2ad5f5522225f

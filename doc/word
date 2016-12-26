@@ -1,0 +1,8 @@
+mandatory 强制性的
+garbage collect 垃圾回收
+copy on write 写时拷贝
+virtual address spaces 虚拟地址空间
+phantom reference 虚引用
+Pipe 管道
+channel 通道
+implementation-dependent 依赖实现
