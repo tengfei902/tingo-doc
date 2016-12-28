@@ -71,16 +71,23 @@ pipe内置SourceChannel(负责读的一端)，SinkChannel(负责写的一端)，
 2.辅助测试，单元测试框架可以将某个待测试的类连接到管道的写端并检查管道的读端出来的数据。
 12.通道工具类 Channels
 
-<<<<<<< HEAD
-=======
 4.选择器
 4.1选择器基础
 当调用一个选择器对象的select()方法时，相关的键会被更新，用来检查所有被注册到该选择器的通道，可以获取到一个键的集合，从而
 找到当时已经就绪的通道。
 选择器提供了询问通道是否已经准备好执行每个io操作的能力。
+Selector:管理着一个被注册的通道集合的信息和继续状态.
+SelectableChannel:被注册到selector上,同时指定对selector而言哪种操作是感兴趣的,可以被注册到多个selector上.
+SelectionKey:封装了selector与channel的注册关系.
+registered key set
+selected key set
+cancelled key set
+wakeup() 可以使线程从被阻塞的select()方法中退出
+selector使线程安全的
 
+5.正则表达式
+6.字符集
+character set 字符集
+coded character set 编码字符集  字符集映射
+character-encoding scheme 字符编码方案 ,定义了如何将字符编码的序列表达为字节序列.
 
-
-
-b
->>>>>>> 38c92db8ed4bd59947a8c27304a2ad5f5522225f
