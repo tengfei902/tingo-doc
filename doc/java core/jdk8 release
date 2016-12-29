@@ -1,0 +1,28 @@
+1.HashMap在JDK8中的提升
+哈希碰撞会使对象落入到同一个桶中,这些值存储在一个链表中,复杂度会从O(1)变为O(n)
+jdk1.6中hashMap采用位桶+链表方式,jdk8中使用位桶+链表/红黑树方式.当位桶中的链表长度达到某个阈值的时候,链表会变成红黑树.
+复杂度由O(n)将为O(log n)
+红黑树:自平衡二叉查找树.
+典型用途:实现关联数组
+进行插入和删除操作时通过特定操作(对树旋转)保持二叉树的平衡,从而获得较高的查找性能.
+性质1. 节点是红色或黑色。
+性质2. 根节点是黑色。
+性质3 每个叶节点（NIL节点，空节点）是黑色的。
+性质4 每个红色节点的两个子节点都是黑色。(从每个叶子到根的所有路径上不能有两个连续的红色节点)
+性质5. 从任一节点到其每个叶子的所有路径都包含相同数目的黑色节点。
+
+2.stream
+对集合对象功能的增强,主要用于聚合操作,或大批量数据操作.结合fork/join实现并行处理.
+stream作用:用于遍历对象
+与iterator的区别:stream可并行处理,依赖于fork/join框架拆分任务和合并结果
+
+流的操作类型:
+Intermediate：一个流可以后面跟随零个或多个 intermediate 操作。其目的主要是打开流，做出某种程度的数据映射/过滤，然后返回一个新的流，
+交给下一个操作使用。这类操作都是惰性化的（lazy），就是说，仅仅调用到这类方法，并没有真正开始流的遍历。
+map (mapToInt, flatMap 等)、 filter、 distinct、 sorted、 peek、 limit、 skip、 parallel、 sequential、 unordered
+Terminal：一个流只能有一个 terminal 操作，当这个操作执行后，流就被使用“光”了，无法再被操作。所以这必定是流的最后一个操作。Terminal
+操作的执行，才会真正开始流的遍历，并且会生成一个结果，或者一个 side effect。
+forEach、 forEachOrdered、 toArray、 reduce、 collect、 min、 max、 count、 anyMatch、 allMatch、 noneMatch、 findFirst、 findAny、 iterator
+
+3.Nashorn
+js引擎,可将js嵌入到java中

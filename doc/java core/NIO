@@ -91,3 +91,9 @@ character set 字符集
 coded character set 编码字符集  字符集映射
 character-encoding scheme 字符编码方案 ,定义了如何将字符编码的序列表达为字节序列.
 
+NIO2 since JDK7
+Path
+Metadata File Attributes
+
+
+
