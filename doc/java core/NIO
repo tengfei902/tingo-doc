@@ -78,6 +78,5 @@ pipe内置SourceChannel(负责读的一端)，SinkChannel(负责写的一端)，
 选择器提供了询问通道是否已经准备好执行每个io操作的能力。
 
 
-
-
-b
+manage symbolic and hard links
+Files and Directories
