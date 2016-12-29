@@ -96,3 +96,8 @@ NIO2 since JDK7
 2.Metadata File Attributes
 3.manage symbolic and hard links
 4.Files and Directories
+
+7.Random Access file
+8.Socket APIs
+9.The Asynchronous Channel API
+同步IO与异步IO的区别：
