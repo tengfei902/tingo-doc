@@ -96,3 +96,6 @@ NIO2 since JDK7
 2.Metadata File Attributes
 3.manage symbolic and hard links
 4.Files and Directories
+5.recursive operations : walks
+6.watch service api
+
