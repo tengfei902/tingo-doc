@@ -98,4 +98,29 @@ NIO2 since JDK7
 4.Files and Directories
 5.recursive operations : walks
 6.watch service api
+7.Random Access file
+8.Socket APIs
+9.The Asynchronous Channel API
+
+nio是一种同步非阻塞的IO模型,也是IO多路复用的基础,解决高并发,也是IO多路复用的基础
+NIO利用事件模型处理IO,解决线程池瓶颈处理海量链接
+IO模型
+1.阻塞IO
+2.非阻塞IO
+3.IO复用
+4.信号驱动IO
+5.异步IO
+
+nio由原来的阻塞读写变成了单线程轮询事件,找到可以读写的网络描述符进行读写.除了时间的轮询是阻塞的,剩余的io操作是cpu操作,没有开启多线程.
+1.事件驱动模型
+2.避免多线程
+3.单线程处理多任务
+4.非阻塞io,io读写不再阻塞,而是返回0
+5.基于block传输
+6.更多的io函数
+7.IO多路复用大大提高了java网络应用的可伸缩性和实用性
+
+netty ,mina
+
+
 
