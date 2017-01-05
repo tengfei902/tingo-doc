@@ -1,0 +1,8 @@
+Avro的产生解决了JSON的冗长和没有IDL的问题
+Avro提供两种序列化格式：JSON格式或者Binary格式
+Binary格式在空间开销和解析性能方面可以和Protobuf媲美，JSON格式方便测试阶段的调试
+Avro在做文件持久化的时候，一般会和Schema一起存储，所以Avro序列化文件自身具有自我描述属性，所以非常适合于做Hive、Pig和MapReduce的持久化数据格式。
+
+适用场景
+Avro解析性能高并且序列化之后的数据非常简洁，比较适合于高性能的序列化服务。
+由于Avro目前非JSON格式的IDL处于实验阶段，而JSON格式的IDL对于习惯于静态类型语言的工程师来说不直观。
