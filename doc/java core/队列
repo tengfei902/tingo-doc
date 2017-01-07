@@ -1,0 +1,24 @@
+java内置队列
+根据存储方式划分，可分为arrayList,linkedList,heap.
+基于heap的队列常用于实现优先级队列，如PriorityBlockingQueue和DelayQueue.
+基于ArrayList的有ArrayBlockingQueue,基于LinkedList的有ConcurrentBlockingQueue，LinkedBlockingQueue,LinkedTransferQueue.
+线程安全的队列有ConcurrentBlockingQueue和LinkedTransferQueue.
+非线程安全的有ArrayBlockingQueue和LinkedBlockingQueue,非线程安全的队列是有界队列。
+ConcurrentBlockingQueue通过CAS实现线程安全。
+
+ArrayBlockingQueue在实际的使用中，会因为加锁和伪共享出现严重的性能问题。
+现实中，加锁通常会引起严重的性能问题，线程因为竞争不到锁而被挂起，等锁释放的时候，线程又会被唤醒，这个过程中存在很大的开销。
+并且通常会有较长时间的中断，因为当一个线程在等待锁时无法做任何事情。
+
+单线程情况下，不加锁的性能 > CAS操作的性能 > 加锁的性能。
+在多线程情况下，为了保证线程安全，必须使用CAS或锁，这种情况下，CAS的性能超过锁的性能，前者大约是后者的8倍。
+
+原子变量：
+原子变量能够保证原子性的操作，由CPU保证原子性
+CAS会把Entry现在的valueg跟线程当初读出的值比较，若相同，赋值，若不相同，则赋值失败，返回重新执行。
+
+伪共享：
+cache由很多个Cache Line组成，每个cache line是64字节。CPU每次从主存中拉取数据，会把相邻s数据也存入到同一个cache line
+伪共享是指cache line失效，导致无法有效利用缓存行特性的现象。
+一般的解决方法：增大数组元素的间隔使由不同线程存取的元素位于不同的行上。缺点：会占用对于的空间。
+

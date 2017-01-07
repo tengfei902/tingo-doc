@@ -33,3 +33,21 @@ CountDownLatch
 Exchanger
 Semaphore
 SynchronousQueue
+
+ReentrantLock
+主要利用CAS+CLH队列来实现，支持公平锁和非公平锁
+CAS:Compare and swap,Cas有三个操作数，内存值V,预期值A,要修改的新值B,仅当V等于A时，新值可以设置成功。
+CLH队列：带头节点的双向非循环链表
+
+ReentrantLock的基本实现可以概括为：先通过CAS尝试获取锁。如果此时已经有线程占据了锁，那就加入CLH队列并且被挂起。当锁被释放之后，
+排在CLH队列队首的线程会被唤醒，然后CAS再次尝试获取锁。
+
+Synchronized
+synchronized语句：当源代码被编译成字节码的时候，会在同步块的入口位置和退出位置分别插入monitorenter和monitorexit字节码指令;
+synchronized方法：在Class文件的方法表中将该方法的access_flags字段中的synchronized标志位置1。这个在specification中没有明确说明。
+
+多进程的解决方案
+操作系统层面的进程间通信，信号量(Semaphores)
+
+分布式环境下的解决方案：分布式锁
+
