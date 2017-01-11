@@ -19,4 +19,13 @@ Throughput 吞吐量
 QPS Query Per Second
 scale up 垂直扩展
 scale out 水平扩展
+object oriented 面向对象
+cohesiveness 内聚性
+High cohesion 高内聚
+represent 表现
+it turns out that  证明是
+member object 成员变量
+aggregation 聚集
+composition
+inheritance 继承
 
