@@ -13,3 +13,10 @@ associate 关联
 recursive 递归的
 capable 用于 be capable of
 establish 建立
+High Concurrency 高并发
+Response Time 响应时间
+Throughput 吞吐量
+QPS Query Per Second
+scale up 垂直扩展
+scale out 水平扩展
+
