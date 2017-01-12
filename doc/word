@@ -13,6 +13,7 @@ associate 关联
 recursive 递归的
 capable 用于 be capable of
 establish 建立
+<<<<<<< HEAD
 intent 意图
 fundamental 基础
 complexity 复杂性
@@ -26,9 +27,19 @@ OOP
 establish 创建
 manipulate 操纵，操作
 determine 决定
-
-
-
-
-
+High Concurrency 高并发
+Response Time 响应时间
+Throughput 吞吐量
+QPS Query Per Second
+scale up 垂直扩展
+scale out 水平扩展
+object oriented 面向对象
+cohesiveness 内聚性
+High cohesion 高内聚
+represent 表现
+it turns out that  证明是
+member object 成员变量
+aggregation 聚集
+composition
+inheritance 继承
 
