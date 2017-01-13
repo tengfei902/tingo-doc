@@ -1,0 +1,3 @@
+static key word
+When you say something is static, it means that particular field or method is not tied to any particular object instance
+of that class
