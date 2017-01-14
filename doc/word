@@ -42,4 +42,31 @@ member object 成员变量
 aggregation 聚集
 composition
 inheritance 继承
+has no knowledge of 不知道
+memory leaks
+circumvent 避免
+vigilant 警觉的
+exception handling
+separately 独立的
+Ordinarily 通常的
+Generally
+allocate 分配
+propagate out 传播
+scenario 场景
+hybrid 杂种的
+identifier 标识符
+flexibility 灵活性，伸缩性
+a great deal of 大量
+medium 媒介
+primitive 原始的
+primitive types 原生类型
+High-precision 高精度
+occupy 占据
+significant 重要的
+portion 部分
+effort 工作 努力
+lifetime of variable occupied significant portion of the programming effort
+specify 说明
+
+
 

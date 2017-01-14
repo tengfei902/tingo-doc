@@ -1,0 +1,34 @@
+Everything is an Object
+manipulate Objects with references
+
+reference
+String a :create a reference
+String a = new String("a"); create an object , and set the reference refers to the object
+
+java storage
+1.registers
+2.stack
+3.heap
+4.constant storage
+5.Non-RAM storage
+
+primitive types:
+new places objects in heap.
+primitive tyoe value is not reference,the variable holds the value directly,and it's placed in stack,so it's much more efficient.
+boolean
+byte    16
+char    8
+short   16
+int     32
+long    64
+float   32
+double  64
+
+wrapper type : allow to make no-primitive type objects in heap to represent that primitive tye values.
+
+Arrays in java
+
+scoping
+
+the method name and the argument list are called method signature
+
