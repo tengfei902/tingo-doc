@@ -67,6 +67,56 @@ portion 部分
 effort 工作 努力
 lifetime of variable occupied significant portion of the programming effort
 specify 说明
-
-
+debate 讨论
+substitute A for B 替换
+polymorphism 多态
+Interchangeable 可替换的
+hierarchy 层次
+manipulate 操作
+encapsulate 封装
+maintenance 维护
+derive 得到 导出
+derived-type objects 子类对象
+generic base types 泛型父类对象
+treat A as B 把A当B对待
+precisely 精确的
+convenient 方便的
+determine 决定
+twist 转动,交结
+early binding
+ensure 确保
+lieu 场景
+explicitly 明确的
+demonstrate 证明
+impressive 印象深刻的
+The singly rooted hierarchy 单继承性
+ultimately 最终,最后
+compatibility 适合 互换性
+accommodate 容纳
+containers 集合,list map stack set tree等
+significantly 明显的
+upcast downcast
+approach 方法 途径
+ambiguity 歧义
+eliminate 淘汰
+sufficient 足够
+optimization 最优化 最佳化
+embed 把..嵌入
+conditional operator
+brace 花括号
+syntax 语法
+succinct 简明的
+preceding 之前的
+implicit 明显的，显式的
+loop 循环
+iteration 循环内容
+reserved word 保留关键字
+constructor 构造器
+denote 代表
+distinguish 区分，辨别
+pragmatic 实用主义
+reclaim 回收
+destructor 希构函数
+verification 证明
+Delegation 代理
 

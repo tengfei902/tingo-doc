@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Everything is an Object
 manipulate Objects with references
 
@@ -31,4 +32,111 @@ Arrays in java
 scoping
 
 the method name and the argument list are called method signature
+
+static key word
+When you say something is static, it means that particular field or method is not tied to any particular object instance
+of that class
+
+Control execution
+
+iteration 循环  while do-while for
+
+comma operator  for(int i=0;i<10;i++)
+foreach syntax
+
+break and continue
+
+use label to task instead of goto
+
+switch is sometimes called a selection statement. needs integral type(int ,char,num)
+
+initialization and cleanup
+
+method overloading
+different method signature to distinguish overloaded methods.
+method signature contains method name and list of argument types
+
+this keyword
+used in non-static method
+
+calling constructor from constructor
+use this to call another constructor with explicitly arguments list.Constructor call must be first thing to do,
+only one constructor can be called in each constructor.
+
+The meaning of static
+cannot call a non-static method in a static method.because there is no this on this particular method.
+
+cleanup : finalization and garbage collection
+because of garbage collector java has no distructor
+
+how a garbage collector works
+scheme 1 : reference counting . it's slow
+scheme 2 : any non-dead object must ultimately be traceable back to a reference that lives either on stack or in static
+area.The chain might go through multiple several layers . if you start in the stack or the static area,you'll find
+all the live objects.
+
+stop-and-copy
+mark-and-sweep
+
+access control
+public protected default private
+
+Reusing classes
+composition and inheritance
+Delegation
+
+final keyword
+this cannot be changed , for class,method,data
+
+Polymorphism
+
+Interface
+A class containing abstract method is called abstract class.
+
+an interface provides a form,no implementations. abstract class can have several method bodies.
+interface supports multiple inheritance.abstract class not.
+
+multiple inheritance in java
+
+inner class
+
+java object container
+Generics and type-safe containers
+generic:It becomes a compiler time error rather than a run time error. Also notice that the cast is no longer necessary.
+the JVM kown the type of objects, it will cast to particular type when call the get method.
+
+Collections:
+Maps:
+
+ArrayList and LinkedList are both type of List,they both hold elements in the same order in whitch they are inserted,
+the difference between the two is : performance for certain manipulation types and
+
+set:only hold the distinct value
+HashSet:fasted way to retreive data
+TreeSet:sort
+LinkedHashSet:keep the objects in order in which they were isnerted.
+Map:key-value structure
+HashMap
+TreeMap
+LinkedHashMap
+
+List:
+list promise to maintain elements in a particular sequence
+ArrayList excels at randomly accessing elements,but is slower when  inserting and removing elements in the midlle of the list.
+LinkedList provides optimal sequential access,with inexpensive insertions and deletions from the middle of the list.
+is Slow in randomly accessing
+
+Stack
+Last in ,first out (LIFO) container
+
+Queue
+is First in,first out(FIFO) container
+
+
+
+
+
+
+
+
 
