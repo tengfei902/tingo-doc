@@ -132,11 +132,53 @@ Last in ,first out (LIFO) container
 Queue
 is First in,first out(FIFO) container
 
+Testing object equivalence
 
+Error Handling with Exceptions
+termination and resumption
 
+throwable:
+there are two general types of throwable objects.
+Error represents compile-time and sytstem errors that you don't worry about catching
+exception is the basic type that can be thrown from any of the standard java library class methods and from your method
+run-time accident.
 
+finally
+checked and unchecked exception
 
+Strings
 
+Type information
+Runtime Type Information(RTTI)
+
+to make an object of that class,the jvm that's executing your programs uses a subsystem called a class loader.
+The class loader subsystem can actually comprise a chain of class loaders, but there’s only one primordial class loader,
+which is part of the JVM implementation. The primordial class loader loads so-called trusted classes, including Java API
+classes, typically from the local disk.
+
+all classes are loaded into jvm dynamically upon the first usage of a class.
+This happens when the program makes the first reference to a static member of that class. It turns out that the constructor
+is also a static method of a class, even though the static keyword is not used for a constructor. Therefore, creating a new
+object of that class using the new operator also counts as a reference to a static member of the class.
+
+instanceof
+
+instanceof vs equivalence
+
+reflection:runtime class information
+The class Class supports the concept of reflection, along with the java.lang.reflect library which contains the classes
+Field, Method, and Constructor (each of which implements the Member interface). Objects of these types are created by the
+JVM at run time to represent the corresponding member in the unknown class. You can then use the Constructors to create new
+ objects, the get( ) and set( ) methods to read and modify the fields associated with Field objects, and the invoke( )
+ method to call a method associated with a Method object.
+
+dynamic proxies
+proxy pattern is used to enhance the real object , in order to provide additional or different operations.
+There are two approaches, first is to use JDK dynamic proxy case when the target has an interface,second is to use cglib.
+In dynamic proxy,the proxy implements from invocationHandler,real object passed in , call the invoke method to execute the
+target method.we can call the newProxyInstance in Proxy to get a proxy object.
+
+null objects.
 
 
 
