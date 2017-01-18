@@ -1,6 +1,31 @@
 1.Introduce yourself
+My name is Tengfei,graduated from NorthWest university in 2010. I worked on java background development since 2010.
+I worked in baosight software after graduated,worked on development of ERP for Steel industry.
+I joint weaver in 2012,mainly worked on product refactor and improvement of performance and stability.
+I joint citi in 2014, worked in CRDS team.
+I'm now working in lufax,the development of search engin and platform refactor.
 
 2.introduce your last project
+Lufax Search engine is based on elasticsearch,used to provide services of full-text search and second level cache.
+The elasticsearch servers are deploied on 4 servers, each server has 2 applications.Each node has 1 sharding and 3 replica.
+The cluster is managed by zookepper.
+The Es Service comprises server side and client side.
+The server side connects to ES cluster,publishes restful interfaces to client side.
+The client side is an SDK. users can use the SDK to manipulate ES just like database.
+
+The ES service can be divided into several components.
+first is es managing. we provides a list of annotations to define a bean index mapping. once the bean changed,the index
+and type will adjust according to the change types of the bean.
+second is data update, we provide an interface, contains the method updateById,updateRecent,updateAll.users can implement
+the interface and filled with their own logics.
+third is query service.We provide an interface with serial of query methods.and some assistance to accomplish the functional
+programming.
+the last is backgroup operation,such as keyword management,field weight in full-text searching,recommend list and so on.
+
+The applications uses jersey to accomplish restful service,mybatis as orm mapping,spring to manage structures.
+Database is oracle ,kafka and activeMq are used as message midware, files are now saved on disk, we may plan to transfer to
+habse in the future.
+
 
 3.the field(method) in object
 
@@ -15,4 +40,12 @@
 8.exception in java
 
 9.finally
+
+10.how to accomplish concurrency
+
+11.sleep vs wait
+
+12.what's new in nio
+
+13.
 

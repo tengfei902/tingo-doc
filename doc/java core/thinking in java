@@ -180,5 +180,58 @@ target method.we can call the newProxyInstance in Proxy to get a proxy object.
 
 null objects.
 
+hashing and hash code
+when put self defined type objects as key into a map,you should override both hashcode and equals method.
+
+holding references
+These classes are especially useful when you have large objects that may cause memory exhaustion.
+SoftReference,WeakReference,PhantomReference.
+You use Reference objects when you want to continue to hold on to a reference to that object,you want to reach that object,
+but you also want to allow garbage collector to release that object.Thus,you have a way to use the object,but the memory
+exhaustion is imminent,you allow that object to release.
+You accomplish this by using a Reference object as an intermediary between you and the ordinary reference.
+In the order of SoftReference, WeakReference, and PhantomReference, each one is "weaker" than the last and corresponds to a
+ different level of reachability. Soft references are for implementing memory-sensitive caches. Weak references are for
+ implementing "canonicalizing mappings"—where instances of objects can be simultaneously used in multiple places in a program,
+ to save storage—that do not prevent their keys (or values) from being reclaimed. Phantom references are for scheduling
+ pre-mortem cleanup actions in a more flexible way than is possible with the Java finalization mechanism.
+
+WeakHashMap
+
+NIO
+1.provide channel and buffer
+2.Memory mapped file
+Memory-mapped files allow you to create and modify files that are too big to bring into memory. With a memory-mapped file,
+you can pretend that the entire file is in memory and that you can access it by simply treating it as a very large array.
+3.File locking
+File locking allows you to synchronize access to a file as a shared resource. However, two threads that contend for the same
+file may be in different JVMs, or one may be a Java thread and the other some native thread in the operating system. The
+file locks are visible to other operating system processes because Java file locking maps directly to the native operating
+system locking facility.
+
+enum
+One very convenient capability of enums is the way that they can be used in switch statements. Ordinarily,
+a switch only works with an integral value, but since enums have an established integral order and the order of
+an instance can be produced with the ordinal( ) method (apparently the compiler does something like this),
+enums can be used in switch statements.
+
+concurrency approaches:
+1.use Thread
+2.use Executors
+
+Runnable and Callable
+
+Daemon threads
+A "daemon" thread is intended to provide a general service in the background as long as the program is running,
+but is not part of the essence of the program. Thus, when all of the non- daemon threads complete, the program is terminated,
+killing all daemon threads in the process. Conversely, if there are any non-daemon threads still running, the program doesn’t
+terminate. There is, for instance, a non-daemon thread that runs main( ).
+
+Joining a thread
+
+Thread groups
+
+Atomicity and volatility
+
 
 
