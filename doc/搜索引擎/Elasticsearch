@@ -1,0 +1,642 @@
+elasticsearch shell examples:
+
+统计数量
+curl -XGET 'http://localhost:9200/_count?pretty' -d '
+{
+	"query":{
+		"match_all":{}
+	}
+}'
+
+document oriented
+
+JSON
+serialization or marshalling 两个处理JSON的模块
+
+数据存储
+relational db -> databases -> tables -> rows -> columns
+elasticsearch -> indexes -> types -> documents -> fields
+
+存储数据:
+PUT /megacorp/employee/2
+{
+    --json body
+}
+
+检索文档:
+根据ID检索: GET /megacorp/employee/1
+
+查询结果
+{
+    "_index":"megacorp",
+    "_type":"employee",
+    "_id":"1",
+    "_version":1,
+    "found":true,
+    "_source":{}
+}
+
+
+查询所有type数据:
+GET /megacorp/employee/_search
+参数查询
+GET /megacorp/employee/_search?q=last_name:Smith
+
+使用DSL语句查询
+GET /megacorp/employee/_search
+{
+    "query":{
+        "match":{
+            "last_name":"Smith"
+        }
+    }
+}
+
+GET /megacorp/employee/_search
+{
+    "query":{
+        "filtered":{
+            "filter":{
+                "range":{
+                    "age":{"gt":30}
+                }
+            },
+            "query":{
+                "match":{
+                    "last_name":"Smith"
+                }
+            }
+        }
+    }
+}
+
+match_phrase查询:
+GET /megacorp/employee/_search{
+    "query":{
+        "match_phrase":{
+            "about":"rock climbing"
+        }
+    }
+}
+
+高亮结果
+GET /megacorp/employee/_search{
+    "query":{
+        "match_phrase":{
+            "about":"rock climbing"
+        }
+    },
+    "highlight":{
+        "fields":{
+            "about":{}
+        }
+    }
+}
+
+聚合aggregation:
+GET /megacorp/employee/_search {
+    "aggs":{
+        "all_interests":{
+            "terms":{"fields":"interests"}
+        }
+    }
+}
+
+匹配且聚合
+GET /megacorp/employee/_search {
+    "query":{
+        "match":{
+            "last_name":"smith"
+        }
+    },
+    "aggs":{
+        "all_interests":{
+            "terms":{
+                "field":"interest"
+            }
+        }
+    }
+}
+
+GET /megacorp/employee/_search {
+    "query":{
+        "match":{
+            "last_name":"smith"
+        }
+    },
+    "aggs":{
+        "avg_age":{
+            "avg":{"field":"age"}
+        }
+    }
+}
+
+elasticsearch集群
+
+集群cluster,节点node,分片shards
+
+GET /_cluster/health
+
+primary shards,replica shards
+
+添加索引
+
+文档元数据 metadata
+_index
+_type
+_id
+
+索引文档
+es自增ID
+
+检索文档的一部分
+GET ／website/blog/123?_source=title,text
+source中只返回title,text两个字段
+
+修改文档
+PUT ／website/blog/123/op_type=create
+PUT ／website/blog/123/_create
+
+删除文档
+DELETE /website/blog/123
+
+冲突处理
+修改文档时指定version确保乐观锁定
+
+文档局部更新
+POST /website/blog/1/_update
+{
+    "doc":{
+        "tags":["testing"],
+        "views":0
+    }
+}
+
+使用脚本更新
+使用groovy脚本更新数据
+
+检索多个文档
+GET /website/blog/_mget
+{
+    "ids":["1","2"]
+}
+
+批量操作
+
+分布式文档存储
+
+主分片和复制分片的交互
+replication 默认为sync ，主节点和复制节点都成功后反馈请求端
+修改为async后不反馈复制节点的保存情况，容易造成客户端大量请求进入导致过载
+
+consistency
+
+搜索
+mapping 数据在每个字段中的解释
+analysis 全文是如何处理的
+QUERY DSL 查询语言
+
+多索引和多类别
+
+分页
+GET ／website/blog/_search?size=5&from=5
+深度分页
+
+简易搜索:
+search api两种表单:query string , dsl
+
+确切值(exact value)与全文文本(full text)
+
+为了方便在全文文本字段中进行全文检索，elasticsearch首先对文本分析，然后使用结果建立一个倒排索引
+倒排索引inverted index
+
+analyzer:
+GET /_analyze?analyzer=standard
+TEXT to analyze
+
+映射
+GET /gb/_mapping/tweet
+mapping中映射参数：index,analyzer
+index:控制字符串以何种方式被索引，analyzed,not_analyzed,no
+
+更新映射
+可以向已有的映射中增加字段，但不能修改它
+
+复合核心字段类型
+数组，null对象
+
+多层对象
+
+请求体查询
+
+QUERY DSL
+
+查询请求：
+GET ／website/blog/_search
+{
+    "query":{
+        "match":{
+            "tweet":"elasticsearch"
+        }
+    }
+}
+
+合并多子句
+GET ／website/blog/_search
+{
+    "bool":{
+        "must":{
+            "match":{
+                "email":"business opportunity"
+            }
+        },
+        "should":[
+            {"match":{"starred":true}},
+            {"bool":{
+                "must":{"folder":"inbox"},
+                "must_not":{"spam":true}
+            }}
+        ],
+        "minimum_should_match":1
+    }
+}
+
+查询与过滤
+Query DSL,filter DSL
+
+查询过滤语句
+term过滤
+{"term":{"age":26}}
+{"term":{"public":true}}
+
+terms过滤
+{
+    "terms":{
+        "tag":["search","full_text","nosql"]
+    }
+}
+
+range过滤
+{
+    "range":{
+        "age":{
+            "gte":20,
+            "lt":30
+        }
+    }
+}
+
+exists和missing过滤
+{
+    "exists":{
+        "field":"title"
+    }
+}
+
+bool过滤
+{
+    "bool":{
+        "must":{
+            "term":{
+                "folder":"inbox"
+            }
+        },
+        "must_not":{
+            "term":{
+                "tag":"spam"
+            }
+        },
+        "should":[
+            {"term":{"starred":true}},
+            {"term":{"unread":true}}
+        ]
+    }
+}
+
+match_all查询
+
+match查询
+{
+    "match":{
+        "tweet":"about search"
+    }
+}
+
+multi_match
+在match查询的基础上同时搜索多个字段
+{
+    "multi_match":{
+        "query":"full text search",
+        "fields":["title","body"]
+    }
+}
+
+查询语句中的过滤
+GET ／website/blog/_search
+{
+    "query":{
+        "filtered":{
+            "filter":{
+                "bool":{
+                    "must":{
+                        "term":{
+                            "folder":"inbox"
+                        }
+                    },
+                    "must_not":{
+                        "query":{
+                            "match":{
+                                "email":"urgent business proposal"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+验证查询
+validate可以验证一条语句是否合法
+GET /gb/tweet/_validate/query
+{
+    "query":{
+        "tweet":{
+            "match":"really powerful"
+        }
+    }
+}
+
+理解错误信息
+explain
+GET /gb/tweet/_validate/query?explain
+{
+    "query":{
+            "tweet":{
+                "match":"really powerful"
+            }
+        }
+}
+
+理解查询语句
+
+相关性排序
+排序方式
+
+GET /_search
+{
+    "query":{
+        "filtered":{
+            "filter":{
+                "term":{"user_id":1}
+            }
+        }
+    },
+    "sort":{"date":{"order":"desc"}}
+}
+
+默认排序
+_score
+多级排序
+GET /_search
+{
+    "query":{
+        "filtered":{
+            "query":{"match":{"tweet":"manage text search"}},
+            "filter":{"user_id":2}
+        }
+    },
+    "sort":[
+        {"date":{"order":"desc"}},
+        {"_score":{"order":"desc"}}
+    ]
+}
+
+多值字段排序
+sort:{
+    "dates":{
+        "order":"asc",
+        "mode":"min"
+    }
+}
+
+深分页
+
+搜索选项
+preference参数允许控制哪个分片或节点处理搜索请求
+接收参数：_primary,_primary_first,_local,_only_node:xyz,_prefer_node:xyz,_shards:2,3
+结果震荡：用户每次刷新页面，结果顺序会发生变化。
+避免方法：对于同一个用户总使用同一个分片，使用一个随机字符串，如用户会话ID来设置preference参数
+
+timeout超时
+routing:
+
+search_type:默认query_then_fetch
+1.count
+2.query_and_fetch
+3.dfs_query_then_fetch,dfs_query_and_fetch
+4.scan 禁用排序，可以快速取回巨大数量
+
+索引管理：
+
+创建索引:
+PUT /my_index
+{
+    "settings":{},
+    "mappings":{
+        "type_one":{},
+        "type_two":{}
+    }
+}
+
+删除索引:
+DELETE /my_index
+
+索引设置:
+PUT /my_temp_index
+{
+    "settings":{
+        "number_of_shards":1,
+        "number_of_replicas":3
+    }
+}
+
+配置分析器
+
+元数据：_source字段
+
+重新索引数据
+创建一个新配置好的索引，然后将所有的文档从旧的索引复制到新的上。
+通过scan-scroll api批量读取旧索引的文档，然后通过bulk api导入到新的索引
+同一时间可以执行多个重新索引的任务
+GET /old_index/_search?search_type=scan&scroll=1m
+{
+    "query":{
+        "range":{
+            "date":{
+                "gte":'",
+                "lt":""
+            }
+        }
+    },
+    "size":1000
+}
+
+索引别名
+_alias 单个操作
+_aliases 原子化多个操作
+
+PUT /my_index_v1
+PUT /my_index_v1/_alias/my_index
+
+检测别名指向哪个索引：
+GET /*/_alias/my_index
+哪些别名指向这个索引：
+GET /my_index_v1/_alias/*
+
+POST /_aliases
+{
+    "actions":[
+        {"remove":{"index":"my_index_v1","alias":"my_index"}},
+        {"add":{"index":"my_index_v2","alias":"my_index"}}
+    ]
+}
+
+过滤操作：
+select * from products where product_id = "1";
+
+GET /my_store/products/_search
+{
+    "query":{
+        "filtered":{
+            "filter":{
+                "term":{
+                    "product_id":"1"
+                }
+            }
+        }
+    }
+}
+组合过滤：
+select * from products where (price=20 or product_id="1") and (price != 30);
+
+GET /my_store/products/_search
+{
+    "query":{
+        "filtered":{
+            "filter":{
+                "bool":{
+                    "should":[
+                        "term":{
+                            "price":20
+                        },
+                        "term":{
+                            "product_id":"1"
+                        }
+                    ],
+                    "must_not":{
+                        "term":{
+                            "price":30
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+嵌套布尔过滤：
+select * from products where product_id = "1" or (product_id="2" and price = 30);
+
+GET /my_store/products/_search
+{
+    "query":{
+        "filtered":{
+            "filter":{
+                "bool":{
+                    should:{
+                        "term":{
+                            "product_id":"1"
+                        },
+                        "bool":{
+                            "must":{
+                                "term":{
+                                    "product_id":"2"
+                                }
+                            },
+                            "must":{
+                                "term":{
+                                    "price":30
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+查询多个准确值：
+select * from products where price in (20,30);
+
+GET /my_store/products/_search
+{
+    "query":{
+        "filtered":{
+            "filter":{
+                "terms":{
+                    "price":[20,30]
+                }
+            }
+        }
+    }
+}
+
+范围
+select * from products where price > 20  and price < 40;
+
+GET /my_store/products/_search
+{
+    "query":{
+        "filtered":{
+            "filter":{
+                "range":{
+                    "price":{
+                        "gt":20,
+                        "lt":40
+                    }
+                }
+            }
+        }
+    }
+}
+
+处理NULL值
+select * from products where tags is not null;
+
+GET /my_store/products/_search
+{
+    "query":{
+        "filtered":{
+            "filter":{
+                "exist":{"field":"tags"}
+            }
+        }
+    }
+}
+
+select * from products where tags is null;
+
+GET /my_store/products/_search
+{
+    "query":{
+        "filtered":{
+            "filter":{
+                "missing":{"field":"tags"}
+            }
+        }
+    }
+}
+
+
