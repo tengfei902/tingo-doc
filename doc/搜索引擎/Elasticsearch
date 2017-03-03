@@ -639,4 +639,95 @@ GET /my_store/products/_search
     }
 }
 
+匹配查询
+GET /my_index/my_type/_search
+{
+    "query": {
+        "match": {
+            "title": "QUICK!"
+        }
+    }
+}
 
+多次查询：
+
+GET /my_index/my_type/_search
+{
+    "query": {
+        "match": {
+            "title": {
+                "query":    "BROWN DOG!",
+                "operator": "and"
+            }
+        }
+    }
+}
+
+控制精度
+GET /my_index/my_type/_search
+{
+  "query": {
+    "match": {
+      "title": {
+        "query":"quick brown dog",
+        "minimum_should_match": "75%"
+      }
+    }
+  }
+}
+
+组合查询
+GET /my_index/my_type/_search
+{
+  "query": {
+    "bool": {
+      "must":     { "match": { "title": "quick" }},
+      "must_not": { "match": { "title": "lazy"  }},
+      "should": [
+          { "match": { "title": "brown" }},
+          { "match": { "title": "dog"   }}
+      ]
+    }
+  }
+}
+
+控制精度
+GET /my_index/my_type/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        { "match": { "title": "brown" }},
+        { "match": { "title": "fox"   }},
+        { "match": { "title": "dog"   }}
+      ],
+      "minimum_should_match": 2 <1>
+    }
+  }
+}
+
+权重
+boost
+GET /_search
+{
+    "query":{
+        "bool":{
+            "must":{
+                "content":{
+                    "match":{"full text search"},
+                    "operator":"and"
+                }
+            },
+            "should":[
+                "match":{
+                    "content":"elasticsearch",
+                    "boost":3
+                },
+                "match":{
+                    "content":"lucene",
+                    "boost":2
+                }
+            ]
+        }
+    }
+}
