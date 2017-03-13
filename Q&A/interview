@@ -41,6 +41,43 @@ habse in the future.
 
 9.finally
 
+<<<<<<< HEAD
+10.what is classloader
+to make an object of that class,the jvm that's executing your programs uses a subsystem called a class loader.
+The class loader subsystem can actually comprise a chain of class loaders, but there’s only one primordial class loader,
+which is part of the JVM implementation. The primordial class loader loads so-called trusted classes, including Java API
+classes, typically from the local disk.
+all classes are loaded into jvm dynamically upon the first usage of a class.
+This happens when the program makes the first reference to a static member of that class. It turns out that the constructor
+is also a static method of a class, even though the static keyword is not used for a constructor. Therefore, creating a new
+object of that class using the new operator also counts as a reference to a static member of the class.
+class loader can avoid loading unsafe class files.Classes loaded by different parent classLoaders has different namespace,
+they cannot refer to each other.
+
+11.JVM parts
+comprise ClassLoader,execution Engine,native method interface,native libraries
+Memory area contains class area,heap,stack,PC register,native method stack.
+execution engine used to execute binary code in PC register.
+stack is private to thread,contains variable status during thread running.
+pc register contains binary code of class method.
+heap comprise young generation and old generation.young generation includes edden and survivor.
+each heap has two survivors,one is in use and the other is empty.
+
+12.primitive types
+primitive tyoe value is not reference,the variable holds the value directly,and it's placed in stack,so it's much more
+efficient.
+boolean
+byte    16
+char    8
+short   16
+int     32
+long    64
+float   32
+double  64
+
+13.database lock
+pessimistic locking
+optimistic locking
 10.how to accomplish concurrency
 
 11.sleep vs wait
