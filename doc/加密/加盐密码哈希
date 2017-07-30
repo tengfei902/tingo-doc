@@ -1,0 +1,5 @@
+salted password hashing
+https:// crackstation.net/hashing-security.htm#properhashing
+密码加密
+
+加密很复杂,避免实现自己的方案，花些时间在已有的方案研究上.
