@@ -1,0 +1,12 @@
+topic
+broker
+producer
+consumer
+
+存储策略
+1.以topic进行消息管理,每个topic包含多个partition,每个partition对应一个逻辑log,有多个segment组成
+2.每个segment中存储多条消息,消息id由其逻辑位置决定
+3.每个part中对应一个index,记录每个segment中的第一条消息的偏移量
+4.发布者发到某个topic的消息会被均匀的分布到多个partition上,broker收到发布消息往对应partition的最后一个segment上添加该消息,
+当某个segment上的消息数达到配置值或消息发布时间超过阈值时,segment上的消息会被flush到磁盘,只有flush到磁盘上的消息订阅者才能
+订阅到,segment数据达到一定的大小后将不再往该segment上写数据,broker会创建新的segment.

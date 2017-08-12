@@ -1,0 +1,90 @@
+stream api
+collection为了存储数据,stream为了描述对数据的计算
+
+新特性:
+1.lambda,闭包的功能编程
+2.多继承 default方法
+3.类型的批注
+4.归纳式目标类型推断
+5.并发更新,
+6.对集合执行批量数据操作
+7.并行阵列排序
+8.日期和时间API
+9.JDBC 4.2
+10.Base64编解码
+11.SecureRandom
+12.证书吊销检查API
+13.http url权限
+
+同步
+每个对象都有自己的隐式监控器,如果对象调用同步方法,就会自动进入对象的隐式监视器.
+
+使用多线程:
+线程上下文切换需要一定的开销,如果创建的线程过多,花费在上下文切换的cpu时间会比执行程序的实际时间更长.
+
+枚举
+每个枚举常量被隐式创建为类的共有静态final成员
+
+自动装箱和自动拆箱
+自动装箱:只要需要基本类型的对象,就自动将基本类型自动封装到与之等价的类型封装器中,而不需要显示构造对象.
+自动拆箱:当需要时自动抽取已装箱对象的数值.
+
+IO
+自动资源管理 ARM
+只有实现了autoClosable接口的资源才能使用带资源的try语句
+1.带资源的try语句管理的资源必须实现AutoCloseable
+2.try代码中声明的资源被隐式声明为final
+3.通过分号分隔每个声明可以管理多个资源
+
+transient 修饰字段不会被持久化
+volatile 从主内存中读取,而非线程栈
+
+lambda
+本质上是一个匿名方法,方法不是独立执行,而是用于实现由函数式接口定义的另一个方法
+函数式接口,SAM Single Abstract Method : 仅制定了一个抽象方法的接口.
+
+clone,cloneable
+
+ClassLoader
+
+迭代器
+iterator
+ListIterator
+spliterator 并行迭代
+
+RandomAccess 通过实现这个接口,可以表明集合支持高效的随机访问其中的元素.通过检查RandomAccess接口,客户端代码可以在运行时确定集合是否适合
+特定类型的随机访问操作.
+
+Observable
+
+Serializable
+transient和static不会序列化
+
+NIO
+nio   封装缓冲区
+channel 支持通道
+file 文件的支持
+charset 字符集服务
+
+缓冲区用于容纳数据,通道表示打开的到IO设备的连接.
+缓冲区通用功能:当前位置,容量,边界
+buffer flip 数据写入buffer后,执行flip,将边界位置指定到当前位置,当前位置指定为0,然后开始遍历该缓存区.
+
+charset
+selector,支持基于键的,非锁定的多通道IO,使用选择器可以通过多个通道执行IO.
+
+file:
+新增Path接口
+Files类
+
+JDK7之后提供了更多获得Channel的方法
+
+联网
+
+流API
+流是数据的渠道.流代表数据的序列.流本身不存储数据,只是移动数据.
+
+
+
+
+
