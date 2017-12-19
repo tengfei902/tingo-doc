@@ -1,0 +1,4 @@
+多进程模型
+单master多worker
+Master处理外部信号，配置文件的读取以及worker的初始化。
+worker单线程，非阻塞的事件模型来处理端口的监听及客户端的处理和响应，同时worker还处理来自master的信号。
